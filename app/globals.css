@@ -121,10 +121,30 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+
   html {
-    @apply font-sans;
+    @apply scroll-smooth font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground selection:bg-foreground selection:text-background;
+  }
+}
+
+@layer utilities {
+  .surface-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--border) 70%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--border) 70%, transparent) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(to bottom, white, transparent 90%);
+  }
+
+  .shelf-scroll {
+    scrollbar-width: none;
+  }
+
+  .shelf-scroll::-webkit-scrollbar {
+    display: none;
   }
 }
