@@ -6,17 +6,37 @@ import {
   BadgeCheck,
   Binary,
   BriefcaseBusiness,
+  ChartColumn,
   FolderKanban,
   GitBranch,
   GraduationCap,
+  Layers3,
   type LucideIcon,
   Mail,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import { buttonVariants } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 
 const githubUrl = "https://github.com/shaypat112";
@@ -65,27 +85,94 @@ const featuredWork = [
   },
 ] as const;
 
-const masteryShelf = [
-  { name: "Next.js", category: "Frontend" },
-  { name: "React", category: "Frontend" },
-  { name: "TypeScript", category: "Language" },
-  { name: "JavaScript", category: "Language" },
-  { name: "Tailwind CSS", category: "Styling" },
-  { name: "shadcn/ui", category: "UI System" },
-  { name: "Framer Motion", category: "Animation" },
-  { name: "Drizzle ORM", category: "Database" },
-  { name: "PostgreSQL", category: "Database" },
-  { name: "Firebase", category: "BaaS" },
-  { name: "Recharts", category: "Data Viz" },
-  { name: "Mistral", category: "AI" },
-  { name: "Vercel", category: "Deployment" },
-  { name: "Docker", category: "DevOps" },
-  { name: "Discord DevOps", category: "Collaboration" },
-  { name: "Responsive Design", category: "UX" },
-  { name: "System Design", category: "Architecture" },
-  { name: "Analytics Dashboards", category: "Product" },
-  { name: "Scouting Systems", category: "Domain" },
-  { name: "Startup Prototyping", category: "Product" },
+const stackCards = [
+  {
+    title: "YETI Stack",
+    subtitle: "Scouting at competition scale",
+    summary:
+      "Optimized for quick entry, fast reads, and stable data flow while FRC teams across North Carolina are collecting high-volume match information in real time.",
+    tools: [
+      "Next.js",
+      "React",
+      "Drizzle ORM",
+      "PostgreSQL",
+      "Docker",
+      "Discord",
+    ],
+  },
+  {
+    title: "StudentHub Stack",
+    subtitle: "Product, analytics, and AI",
+    summary:
+      "Balanced product polish with fast iteration, combining modern frontend patterns, hosted backend tools, and data-heavy student workflows.",
+    tools: [
+      "Next.js",
+      "TypeScript",
+      "Firebase",
+      "shadcn/ui",
+      "Recharts",
+      "Mistral",
+      "Vercel",
+    ],
+  },
+  {
+    title: "Votrio Stack",
+    subtitle: "Security-minded startup architecture",
+    summary:
+      "Explored more specialized SaaS and BaaS services to move quickly while still protecting flexibility, trust, and future product control.",
+    tools: [
+      "Auth Providers",
+      "Managed Datastores",
+      "Security Tooling",
+      "Serverless Platforms",
+      "Observability",
+      "Automation",
+    ],
+  },
+] as const;
+
+const expertiseData = [
+  { area: "Web Dev", score: 96 },
+  { area: "React", score: 92 },
+  { area: "TypeScript", score: 90 },
+  { area: "Product UI", score: 88 },
+  { area: "Python", score: 68 },
+  { area: "Data Viz", score: 84 },
+  { area: "AI Apps", score: 78 },
+  { area: "Java", score: 49 },
+] as const;
+
+const expertiseRows = [
+  {
+    area: "Web Development",
+    level: "High",
+    strength: "Production-ready frontend thinking, clean UX, fast iteration",
+    proof: "Next.js, React, TypeScript, Tailwind, shadcn/ui, motion",
+  },
+  {
+    area: "Data Systems",
+    level: "High",
+    strength: "Structured data modeling and interface design for fast interpretation",
+    proof: "Drizzle, PostgreSQL, scouting analytics, dashboards",
+  },
+  {
+    area: "AI Integration",
+    level: "Mid-High",
+    strength: "Comfortable weaving models into product flows without overcomplicating the UX",
+    proof: "Mistral experiments, AI-assisted product features",
+  },
+  {
+    area: "Python",
+    level: "Mid",
+    strength: "Good practical fluency for automation, scripts, and technical exploration",
+    proof: "Workflow scripting, experimentation, backend support tasks",
+  },
+  {
+    area: "Java",
+    level: "Developing",
+    strength: "Functional working knowledge with room to deepen system-level expertise",
+    proof: "Lower emphasis compared with web and product engineering",
+  },
 ] as const;
 
 const certificationsShelf = [
@@ -335,36 +422,155 @@ export function PortfolioHome() {
           className="grid gap-12 lg:grid-cols-[1fr_1.2fr]"
         >
           <SectionHeading
-            label="Core Skills"
-            title="The tech stacks I am most familiar with"
-            description=""
-            icon={Binary}
+            label="Tech Stacks"
+            title="The tools behind each product are organized like products too."
+            description="Instead of a generic skill list, this section breaks the stack down by project. Each card shows the technologies, architecture style, and product context behind the work."
+            icon={Layers3}
           />
 
-          <div className="relative">
-            <div className="shelf-scroll overflow-x-auto pb-6">
-              <div className="flex min-w-max gap-4 pr-4">
-                {masteryShelf.map((skill, index) => (
-                  <motion.div
-                    key={skill.name}
-                    initial={{ opacity: 0, y: 18 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.25 }}
-                    transition={{ delay: index * 0.04, duration: 0.42 }}
-                    whileHover={{ y: -4 }}
-                    className="flex w-44 shrink-0 flex-col gap-8 rounded-[1.6rem] border border-border/70 bg-card px-5 py-5 shadow-[0_20px_45px_-38px_rgba(0,0,0,0.8)]"
-                  >
-                    <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">
-                      {skill.category}
-                    </span>
-                    <p className="text-2xl font-semibold tracking-[-0.05em] text-balance">
-                      {skill.name}
-                    </p>
-                  </motion.div>
-                ))}
+          <div className="shelf-scroll overflow-x-auto pb-4">
+            <div className="flex min-w-max gap-5 pr-4">
+              {stackCards.map((stackCard, index) => (
+                <motion.article
+                  key={stackCard.title}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ delay: index * 0.05, duration: 0.42 }}
+                  whileHover={{ y: -4 }}
+                  className="flex w-[22rem] shrink-0 flex-col rounded-[1.8rem] border border-border/70 bg-card/90 p-6 shadow-[0_20px_45px_-38px_rgba(0,0,0,0.8)]"
+                >
+                  <p className="text-xs font-medium tracking-[0.22em] text-muted-foreground uppercase">
+                    {stackCard.subtitle}
+                  </p>
+                  <h3 className="mt-4 text-2xl font-semibold tracking-[-0.05em]">
+                    {stackCard.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                    {stackCard.summary}
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {stackCard.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="rounded-full border border-border/70 bg-background px-3 py-1 text-xs font-medium tracking-[0.18em] text-foreground/88 uppercase"
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+
+        <motion.section
+          {...fades}
+          className="grid gap-10 xl:grid-cols-[1.05fr_0.95fr]"
+        >
+          <div className="space-y-8">
+            <SectionHeading
+              label="Expertise Map"
+              title="A clearer picture of where my technical depth is strongest."
+              description="Web development is my highest-confidence lane right now, with strong frontend systems, product UX, and data-heavy application work. Python sits in the middle for practical engineering tasks, while Java is an area I am still growing."
+              icon={ChartColumn}
+            />
+
+            <div className="rounded-[2rem] border border-border/70 bg-card/92 p-6 shadow-[0_22px_80px_-40px_rgba(0,0,0,0.5)]">
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-sm font-medium tracking-[0.22em] text-muted-foreground uppercase">
+                    Capability Graph
+                  </p>
+                  <h3 className="mt-2 text-2xl font-semibold tracking-[-0.05em]">
+                    Relative Areas of Expertise
+                  </h3>
+                </div>
+                <Binary className="size-5 text-muted-foreground" />
+              </div>
+
+              <div className="h-80 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={expertiseData} margin={{ top: 12, right: 0, left: -18, bottom: 8 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
+                    <XAxis
+                      dataKey="area"
+                      tickLine={false}
+                      axisLine={false}
+                      tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
+                    />
+                    <YAxis
+                      tickLine={false}
+                      axisLine={false}
+                      domain={[0, 100]}
+                      tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
+                    />
+                    <Tooltip
+                      cursor={{ fill: "color-mix(in oklab, var(--foreground) 6%, transparent)" }}
+                      contentStyle={{
+                        background: "var(--card)",
+                        border: "1px solid var(--border)",
+                        borderRadius: "18px",
+                        color: "var(--foreground)",
+                      }}
+                    />
+                    <Bar dataKey="score" radius={[18, 18, 6, 6]}>
+                      {expertiseData.map((entry, index) => (
+                        <Cell
+                          key={entry.area}
+                          fill={index < 4 ? "var(--foreground)" : "color-mix(in oklab, var(--foreground) 64%, var(--background))"}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
-            <div className="h-3 rounded-full bg-foreground/8 dark:bg-foreground/12" />
+          </div>
+
+          <div className="rounded-[2rem] border border-border/70 bg-card/92 p-6 shadow-[0_22px_80px_-40px_rgba(0,0,0,0.5)]">
+            <div className="mb-6">
+              <p className="text-sm font-medium tracking-[0.22em] text-muted-foreground uppercase">
+                Stack Breakdown
+              </p>
+              <h3 className="mt-2 text-2xl font-semibold tracking-[-0.05em]">
+                Technical Focus Table
+              </h3>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                A more structured look at what I am strongest in today, what I use often,
+                and which areas I am still actively leveling up.
+              </p>
+            </div>
+
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="whitespace-normal">Area</TableHead>
+                  <TableHead className="whitespace-normal">Level</TableHead>
+                  <TableHead className="whitespace-normal">Strength</TableHead>
+                  <TableHead className="whitespace-normal">Current Proof</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {expertiseRows.map((row) => (
+                  <TableRow key={row.area}>
+                    <TableCell className="whitespace-normal font-medium">
+                      {row.area}
+                    </TableCell>
+                    <TableCell className="whitespace-normal text-muted-foreground">
+                      {row.level}
+                    </TableCell>
+                    <TableCell className="whitespace-normal text-muted-foreground">
+                      {row.strength}
+                    </TableCell>
+                    <TableCell className="whitespace-normal text-muted-foreground">
+                      {row.proof}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </motion.section>
 
@@ -374,8 +580,8 @@ export function PortfolioHome() {
         >
           <SectionHeading
             label="Certifications"
-            title="A polished section for credentials, achievements, and formal proof of work."
-            description="This area is ready to hold the certifications, recognitions, and learning milestones you want to spotlight."
+            title="My Credentials and Recognitions"
+            description="These are my top certifications, awards, and learning milestones that I have."
             icon={ShieldCheck}
           />
 
